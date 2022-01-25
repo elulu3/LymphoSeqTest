@@ -34,7 +34,8 @@ Imports: Biostrings,
          reshape,
          vegan,
          dplyr,
-         stringr
+         stringr,
+         progress
 Remotes: adw96/breakaway
 License: Artistic-2.0
 LazyData: true
