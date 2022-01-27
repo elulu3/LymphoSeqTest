@@ -36,5 +36,5 @@ stable <- LymphoSeqTest::readImmunoSeq(path = file_path)
 atable <- LymphoSeqTest::productiveSeq(stable, aggregate = "junction_aa")
 ctable <- LymphoSeqTest::cloneTrack(study_table = atable,
                                 sample_list = c("TRB_CD8_949", "TRB_CD8_CMV_369"))
-LymphoSeqTest::plotTrackSingular(ctable)
+
 }

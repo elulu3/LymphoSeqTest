@@ -23,8 +23,8 @@ stable <- readImmunoSeq(path = file_path)
 ntable <- productiveSeq(stable, aggregate = "junction")
 
 msa <- alignSeq(ntable, repertoire_id = "IGH_MVQ92552A_BL", type = "junction", 
-         method = "ClustalW", output = "console")
-plotAlignment(msa)
+         method = "ClustalW")
+
 }
 \seealso{
 The function utilizes ggmsa package for visualizations. Further details

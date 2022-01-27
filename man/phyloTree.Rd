@@ -44,21 +44,21 @@ stable <- readImmunoSeq(path = file_path)
 
 ntable <- productiveSeq(study_table = stable, aggregate = "junction")
 
-phyloTree(study_table = ntable, repertoire_id = "IGH_MVQ92552A_BL", type = "junction", 
+phyloTree(study_table = ntable, repertoire_ids = "IGH_MVQ92552A_BL", type = "junction", 
          layout = "rectangular")
 
-phyloTree(study_table = ntable, repertoire_id = "IGH_MVQ92552A_BL", type = "junction_aa", 
+phyloTree(study_table = ntable, repertoire_ids = "IGH_MVQ92552A_BL", type = "junction_aa", 
          layout = "circular")
          
 # Add scale and title to figure
-phyloTree(study_table = ntable, repertoire_id = "IGH_MVQ92552A_BL", type = "junction_aa", 
+phyloTree(study_table = ntable, repertoire_ids = "IGH_MVQ92552A_BL", type = "junction_aa", 
          layout = "rectangular") +
          ggtree::theme_tree2() +
-         ggplot2::theme(legend.position = "right", legend.key = element_rect(colour = "white")) +
+         ggplot2::theme(legend.position = "right", legend.key = ggplot2::element_rect(colour = "white")) +
          ggplot2::ggtitle("Title")
          
 # Hide legend and leaf labels
-phyloTree(study_table = productive_nt, repertoire_id = "IGH_MVQ92552A_BL", type = "junction", 
+phyloTree(study_table = ntable, repertoire_ids = "IGH_MVQ92552A_BL", type = "junction", 
          layout = "rectangular", label = FALSE) +
          ggplot2::theme(legend.position="none")
 }

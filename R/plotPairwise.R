@@ -27,7 +27,7 @@
 #' pairwisePlot(matrix = bhattacharyya_matrix)
 #' 
 #' # Change plot color, title legend, and add title
-#' pairwisePlot(matrix = similarity.matrix) + 
+#' pairwisePlot(matrix = similarity_matrix) + 
 #' ggplot2::scale_fill_gradient(low = "#deebf7", high = "#3182bd") + 
 #' ggplot2::labs(fill = "Similarity score") + 
 #' ggplot2::ggtitle("Figure Title")

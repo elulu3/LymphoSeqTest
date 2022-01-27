@@ -30,5 +30,5 @@ study_table <- readImmunoSeq(path = file.path)
 productive_aa <- productiveSeq(study_table = study_table, aggregate = "aminoAcid")
 
 top_seqs <- topSeqs(productive_table = productive_aa, top = 1)
-searchDB(list = top_seqs, db="Adaptive")
+searchDB(study_table = top_seqs, credential="Adaptive")
 }

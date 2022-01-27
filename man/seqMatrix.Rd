@@ -32,13 +32,13 @@ atable <- productiveSeq(stable,
 top_seqs <- topSeqs(atable,
                     top = 1)
 sequence_matrix <- seqMatrix(atable,
-                             sequences = top.seqs$junction_aa)
+                             sequences = top_seqs$junction_aa)
 unique_seqs <- uniqueSeqs(atable)
 sequence_matrix <- seqMatrix(atable, 
                              sequences = unique_seqs$junction_aa)
 # It can be helpful to combine top.freq and sequence.matrix
 top_freq <- topFreq(atable, frequency = 0.001)
-sequence_matrix <- seqMatrix(atable, sequences = top.freq$junction_aa)
+sequence_matrix <- seqMatrix(atable, sequences = top_freq$junction_aa)
 top_freq_matrix <- merge(top_freq, sequence_matrix)
 }
 \seealso{

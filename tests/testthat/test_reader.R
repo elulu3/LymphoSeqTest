@@ -46,3 +46,15 @@ test_that("Reads AIRR files from a path correctly", {
   expect_equal(srow, 417)
   expect_true(dplyr::all_equal(ctable, stable))
 })
+
+test_that("Creates correct columns", {
+  stable <- LymphoSeqTest::readImmunoSeq("test_data/015V12001549_CFAR.tsv")
+  scol <- base::ncol(stable)
+  sfields <- colnames(stable)
+
+  airr_headers_path <- system.file("extdata", "AIRR_fields.csv", package = "LymphoSeqTest")
+  airr_table <- readr::read_csv(airr_headers_path, trim_ws = TRUE)
+  airr_fields <- colnames(airr_table)
+  expect_equal(scol, 144)
+  expect_equal(sfields, airr_fields)
+})

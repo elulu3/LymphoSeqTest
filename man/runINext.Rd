@@ -22,6 +22,6 @@ stable <- readImmunoSeq(path = file_path)
 atable <- productiveSeq(stable, 
                         aggregate = "junction_aa", 
                         prevalence = TRUE)
-atable <- atable \%>\% filter(repertoire_id == "TRB_Unsorted_1320")
+atable <- atable \%>\% dplyr::filter(repertoire_id == "TRB_Unsorted_1320")
 rtable <- runINext(atable)
 }

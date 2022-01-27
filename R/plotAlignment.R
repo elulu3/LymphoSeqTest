@@ -14,8 +14,8 @@
 #' ntable <- productiveSeq(stable, aggregate = "junction")
 #' 
 #' msa <- alignSeq(ntable, repertoire_id = "IGH_MVQ92552A_BL", type = "junction", 
-#'          method = "ClustalW", output = "console")
-#' plotAlignment(msa)
+#'          method = "ClustalW")
+#'
 #' @export
 plotAlignment <- function(msa) {
   ggmsa::ggmsa(msa, font = NULL, color = "Chemistry_NT")

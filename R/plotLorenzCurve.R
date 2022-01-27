@@ -24,13 +24,13 @@
 #' 
 #' stable <- readImmunoSeq(path = file_path)
 #' 
-#' repertoire_ids <- stable %>% pull(repertoire_id) %>% unique()
+#' repertoire_ids <- stable %>% dplyr::pull(repertoire_id) %>% unique()
 #'
 #' lorenzCurve(repertoire_ids = repertoire_ids, study_table = stable)
 #' 
 #' atable <- productiveSeq(study_table = stable, aggregate = "junction_aa")
 #' 
-#' repertoire_ids <- atable %>% pull(repertoire_id) %>% unique()
+#' repertoire_ids <- atable %>% dplyr::pull(repertoire_id) %>% unique()
 #' 
 #' lorenzCurve(repertoire_ids = repertoire_ids, study_table = atable)
 #'
@@ -42,7 +42,8 @@
 #' 
 #' labels <- c("Day 0", "Day 32", "Day 83", "Day 949", "Day 1320")
 #' 
-#' colors <- c("navyblue", "red", "darkgreen", "orange", "purple")
+#' colors <- c("navyblue", "red", "darkgreen", "orange", "purple",
+#'              "yellow", "pink", "lightgreen", "cyan", "maroon")
 #' 
 #' lorenz_curve + 
 #' ggplot2::scale_color_manual(name = "repertoire_ids", 

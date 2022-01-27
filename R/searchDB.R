@@ -19,14 +19,14 @@
 #' productive_aa <- productiveSeq(study_table = study_table, aggregate = "aminoAcid")
 #' 
 #' top_seqs <- topSeqs(productive_table = productive_aa, top = 1)
-#' searchDB(list = top_seqs, db="Adaptive")
+#' searchDB(study_table = top_seqs, credential="Adaptive")
 #' @export
 #' @import tidyverse httr jsonlite 
 searchDB <- function(study_table, credential) {
     study_table <- study_table %>% 
-                   filter(!is.na(aminoAcid)) %>%
-                   pmap_dfr(searchIreceptor, .progress=TRUE) %>%
-                   bind_rows()
+                   dplyr::filter(!is.na(sequence_aa)) %>%
+                   purrr::pmap_dfr(searchIreceptor, .progress=TRUE) %>%
+                   dplyr::bind_rows()
     return(study_table)
 }
 
@@ -47,7 +47,7 @@ searchIreceptor <- function(...) {
     path <- "https://ipa1.ireceptor.org/v2/sequences_summary?"
     request <- GET(url=path, 
                query= list(username="shashi_ravishankar", 
-               junction_aa=sequence_row$aminoAcid)) 
+               junction_aa=sequence_row$sequence_aa)) 
     response_list <- content(request, as = "text", encoding = "UTF-8") %>%
                      jsonlite::fromJSON(flatten = TRUE) 
      if (length(response_list$summary) == 0){
@@ -57,10 +57,10 @@ searchIreceptor <- function(...) {
                                  disease_state_sample = NA, 
                                  cell_subset = NA,
                                  ir_project_sample_id = NA,
-                                 junction_aa = sequence_row$aminoAcid)
+                                 junction_aa = sequence_row$sequence_aa)
         response_table <- left_join(sequence_row, 
                                     response_table, 
-                                    by=c("aminoAcid" = "junction_aa"))                 
+                                    by=c("sequence_aa" = "junction_aa"))                 
     } else {
         response_items <- response_list$items %>% as_tibble() %>% select(junction_aa, ir_project_sample_id) #dapply(`[`, c('junction_aa', 'ir_project_sample_id')) %>% as_tibble()
         response_summary <- response_list$summary %>% as_tibble() %>% select(disease_diagnosis, pub_ids, disease_state_sample, cell_subset, ir_project_sample_id) #dapply(`[`, c('disease_diagnosis', 'pub_ids', 'disease_state_sample', 'cell_subset', 'ir_project_sample_id')) %>% as_tibble()
@@ -83,7 +83,7 @@ searchIreceptor <- function(...) {
                         ungroup()
         response_table <- left_join(sequence_row, 
                                     response_table, 
-                                    by=c("aminoAcid" = "junction_aa"))                 
+                                    by=c("sequence_aa" = "junction_aa"))                 
     }
     return(response_table)
 }

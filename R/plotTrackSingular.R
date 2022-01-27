@@ -10,14 +10,14 @@
 #' atable <- LymphoSeqTest::productiveSeq(stable, aggregate = "junction_aa")
 #' ctable <- LymphoSeqTest::cloneTrack(study_table = atable,
 #'                                 sample_list = c("TRB_CD8_949", "TRB_CD8_CMV_369"))
-#' LymphoSeqTest::plotTrackSingular(ctable)
+#'
 #' @return A list of alluvial plots highlighting a single sequence
 #' @details The plot is made using the package ggplot2 and can be reformatted
 #' using ggplot2 functions.  
 #' @export
 plotTrackSingular <- function(ctable) {
-  alist <- ctable %>% pull(junction_aa) %>% unique()
-  plots <- alist %>% map(~highlightPlot(.x, ctable))
+  alist <- ctable %>% dplyr::pull(junction_aa) %>% unique()
+  plots <- alist %>% purrr::map(~highlightPlot(.x, ctable))
   return(plots)
 }
 
@@ -33,8 +33,8 @@ highlightPlot <- function(aseq, ctable) {
             select(junction_aa) %>%
             distinct() %>%
             mutate(color = if_else(junction_aa == aseq, "#7570b3", "grey"))
-  cpal <- pal_table %>% pull(color)
-  names(cpal) <- pal_table %>% pull(junction_aa)
+  cpal <- pal_table %>% dplyr::pull(color)
+  names(cpal) <- pal_table %>% dplyr::pull(junction_aa)
   tplot <- plotTrack(ctable) +
            scale_fill_manual(values = cpal, breaks = aseq, name = "CDR3 Sequence") +
            theme(legend.position = "bottom")
