@@ -58,5 +58,6 @@ biocViews: Software,
            vegan,
            phyloseq
 NeedsCompilation: no
-URL: https://github.com/elulu3/LymphoSeqTest
+URL: https://github.com/elulu3/LymphoSeqTest,
+    https://elulu3.github.io/LymphoSeqTest
 BugReports: https://github.com/elulu3/LymphoSeqTest/issues
