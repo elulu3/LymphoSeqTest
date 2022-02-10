@@ -4,21 +4,9 @@
 #' Biotechnologies ImmunoSEQ analyzer, BGI IR-SEQ, MiXCR and stores 
 #' them as MiAIRR compliant tibble. 
 #' 
-#' @details May import tab-delimited files containing antigen receptor 
-#' sequencing from with the following header set.  
-#' 
-#' | MiAIRR field ID | Type1           | Type2                       | Type3               | Type4                          | Type5                               | Type6             |
-#' | --------------- | --------------- | --------------------------- | ------------------- | ------------------------------ | ----------------------------------- | ----------------- |
-#' | junction        | nucleotide      | nucleotide                  | nucleotide          | nucleotide.CDR3.in.lowercase . | nucleotide( CDR3   in   lowercase ) | nSeqCDR3          |
-#' | junction_aa     | aminoAcid       | aminoAcid                   | aminoAcid           | aminoAcid.CDR3.in.lowercase .  | aminoAcid( CDR3   in   lowercase )  | aaSeqCDR3         |
-#' | duplicate_count | count ( reads ) | count ( templates / reads ) | count ( templates ) | cloneCount                     | cloneCount                          | cloneCount        |
-#' | v_call          | vGeneName       | vGeneName                   | vGeneName           | vGene                          | vGene                               | allVHitsWithScore |
-#' | d_call          | dGeneName       | dGeneName                   | dGeneName           | dGene                          | dGene                               | allDHitsWithScore |
-#' | j_call          | jGeneName       | jGeneName                   | jGeneName           | jGene                          | jGene                               | allJHitsWithScore |
-#'
 #' @md
 #' @name readImmunoSeq
-#' @describeIn readImmunoSeq Read a set of files 
+#' @describeIn readImmunoSeq Read a set of files
 #' @param path Path to the directory containing tab-delimited files.  Only
 #' files with the extension .tsv are imported.  The names of the data frames are 
 #' the same as names of the files.
@@ -53,11 +41,13 @@ readImmunoSeq <- function(path, recursive = FALSE) {
         warning("One or more of the files you are trying to import has no sequences and will be ignored.", 
                 call. = FALSE)
     }
+    airr_headers_path <- system.file("extdata", "AIRR_fields.csv", package = "LymphoSeqTest")
+    airr_fields <- readr::read_csv(airr_headers_path, trim_ws = TRUE)
     progress_bar <- progress::progress_bar$new(format = "Reading AIRR-Seq files [:bar] :percent eta: :eta",
                                            total = length(file_paths), clear = FALSE, width = 60)
     progress_bar$tick(0)
     file_list <- file_paths %>% 
-                 purrr::map(~ readFiles(.x, progress_bar)) %>%
+                 purrr::map(~ readFiles(.x, airr_fields, progress_bar)) %>%
                  dplyr::bind_rows()
     progress_bar$terminate()
     return(file_list)
@@ -90,6 +80,9 @@ getStandard <- function(clone_file, airr_fields) {
 
     clone_data <- readr::read_tsv(clone_file, na = c("", "NA", "Nan", "NaN", "unresolved"))
     existing_match <- airr_fields[airr_fields %in% colnames(clone_data)]
+    if (length(existing_match) == 144) {
+        return(clone_data)
+    }
     existing_airr_data <- clone_data %>%
                             dplyr::select(existing_match)
     match <- matching_fields[colnames(clone_data)] %>%
@@ -108,12 +101,14 @@ getStandard <- function(clone_file, airr_fields) {
     file_name <- file_name %>% stringr::str_sub(1, stringr::str_length(file_name) - 4)
     
     clone_data <- clone_data %>% mutate(repertoire_id = file_name)
-    if ("sequence" %in% colnames(clone_data)) {
+    if ("sequence" %in% colnames(clone_data) && "sequence_aa" %in% colnames(clone_data)) {
         clone_data <- clone_data %>%
-                    dplyr::mutate(junction = sequence)
+                    dplyr::mutate(junction = sequence,
+                                  junction_aa = sequence_aa)
     } else {
         clone_data <- clone_data %>%
-                    dplyr::mutate(sequence = junction)
+                    dplyr::mutate(sequence = junction,
+                                  sequence_aa = junction_aa)
     }
     clone_data <- clone_data %>%
                     dplyr::mutate(clone_id = junction)
@@ -133,45 +128,56 @@ getStandard <- function(clone_file, airr_fields) {
 #'
 #' @param clone_file .tsv file containing results from AIRRSeq pipeline
 #'
-#' @return Tibble in MiAIRR format 
+#' @return Tibble in MiAIRR format
 #'
 #' @import tidyverse
 #' @export
 #' @rdname readImmunoSeq
-readFiles <- function(clone_file, progress) {
+readFiles <- function(clone_file, empty_airr_frame, progress) {
     progress$tick()
-    airr_headers_path <- system.file("extdata", "AIRR_fields.csv", package = "LymphoSeqTest")
-    airr_fields <- readr::read_csv(airr_headers_path, trim_ws = TRUE)
-    file_info <- getStandard(clone_file, colnames(airr_fields))
-    clone_frame <- dplyr::right_join(airr_fields, file_info)
+    file_info <- getStandard(clone_file, colnames(empty_airr_frame))
+    if (ncol(file_info) == 144) {
+        return(file_info)
+    }
+    clone_frame <- dplyr::right_join(empty_airr_frame, file_info)
     options(readr.show_progress = FALSE)
-    
-    clone_frame <- clone_frame %>%
-                    dplyr::mutate(sequence_id = row_number()) %>%
-                    dplyr::mutate(junction_aa = sequence_aa) %>%
-                    dplyr::mutate(junction_length = stringr::str_length(junction)) %>%
-                    dplyr::mutate(junction_aa_length = stringr::str_length(junction_aa)) %>%
-                    dplyr::mutate(rev_comp = FALSE) %>%
-                    dplyr::mutate(stop_codon = dplyr::if_else(stringr::str_detect(sequence, "\\*") | stringr::str_detect(sequence_aa, "\\*") | 
-                            is.na(sequence) | is.na(sequence_aa), TRUE, FALSE)) %>%
-                    dplyr::mutate(productive = dplyr::if_else(stringr::str_detect(sequence, "\\*") | stringr::str_detect(sequence_aa, "\\*") | 
-                            is.na(sequence) | is.na(sequence_aa), FALSE, TRUE)) %>%
-                    dplyr::mutate(v_call = dplyr::if_else(stringr::str_detect(v_call, "/"), "unresolved", v_call)) %>%
-                    dplyr::mutate(j_call = dplyr::if_else(stringr::str_detect(j_call, "/"), "unresolved", j_call)) %>%
-                    dplyr::mutate(complete_vdj = dplyr::if_else(is.na(v_call) | is.na(d_call) | is.na(j_call) | 
-                        stringr::str_detect(v_call, "unresolved") | stringr::str_detect(d_call, "unresolved") | stringr::str_detect(j_call, "unresolved"), FALSE, TRUE)) %>%
-                    dplyr::mutate(duplicate_frequency = duplicate_count / sum(duplicate_count)) %>%
-                    dplyr::mutate(reading_frame = dplyr::if_else(stringr::str_detect(sequence_aa, "\\*"), "out-of-frame", "in-frame")) %>%
-                    dplyr::mutate(v_family = dplyr::if_else(stringr::str_detect(v_call, "(TRB|TCRB)V"),
-                                             stringr::str_extract(v_call, "(TRB|TCRB)V\\d+"), "unrecognized"),
-                                 j_family = dplyr::if_else(stringr::str_detect(j_call, "(TRB|TCRB)J"),
-                                             stringr::str_extract(j_call, "(TRB|TCRB)J\\d+"), "unrecognized"),
-                                 d_family = dplyr::if_else(stringr::str_detect(d_call, "(TRB|TCRB)D"),
-                                             stringr::str_extract(d_call, "(TRB|TCRB)D\\d+"), "unrecognized"))
+        clone_frame <- clone_frame %>%
+                    dplyr::mutate(sequence_id = row_number(),
+                        junction_length = stringr::str_length(junction),
+                        junction_aa_length = stringr::str_length(junction_aa),
+                        rev_comp = FALSE,
+                        stop_codon = dplyr::if_else(stringr::str_detect(sequence, "\\*") | stringr::str_detect(sequence_aa, "\\*") | 
+                                                is.na(sequence) | is.na(sequence_aa), TRUE, FALSE),
+                        productive = dplyr::if_else(stringr::str_detect(sequence, "\\*") | stringr::str_detect(sequence_aa, "\\*") | 
+                                                is.na(sequence) | is.na(sequence_aa), FALSE, TRUE),
+                        v_call = dplyr::if_else(stringr::str_detect(v_call, "/"), "unresolved", v_call),
+                        j_call = dplyr::if_else(stringr::str_detect(j_call, "/"), "unresolved", j_call),
+                        complete_vdj = dplyr::if_else(is.na(v_call) | is.na(d_call) | is.na(j_call) | 
+                                                stringr::str_detect(v_call, "unresolved") | stringr::str_detect(d_call, "unresolved") |
+                                                stringr::str_detect(j_call, "unresolved"), FALSE, TRUE),
+                        duplicate_frequency = duplicate_count / sum(duplicate_count),
+                        reading_frame = dplyr::if_else(stringr::str_detect(sequence_aa, "\\*"), "out-of-frame", "in-frame"),
+                        v_family = dplyr::if_else(stringr::str_detect(v_call, "(TRB|TCRB)V"),
+                                                stringr::str_extract(v_call, "(TRB|TCRB)V\\d+"), "unrecognized"),
+                        j_family = dplyr::if_else(stringr::str_detect(j_call, "(TRB|TCRB)J"),
+                                                stringr::str_extract(j_call, "(TRB|TCRB)J\\d+"), "unrecognized"),
+                        d_family = dplyr::if_else(stringr::str_detect(d_call, "(TRB|TCRB)D"),
+                                                stringr::str_extract(d_call, "(TRB|TCRB)D\\d+"), "unrecognized"))
 
     return(clone_frame)
 }
 
+
+#' @section Get iReceptor standard format:
+#'
+#' Returns a tibble that is compliant with the iReceptor repertoire format.
+#'
+#' @param clone_frame An AIRR compliant tibble
+#' @return Tibble in iReceptor format
+#'
+#' @import tidyverse
+#' @export
+#' @rdname readImmunoSeq
 iReceptorFormat <- function(clone_frame) {
     iReceptor_frame <- clone_frame %>%
                         dplyr::select(-c(repertoire_id, sample_processing_id,

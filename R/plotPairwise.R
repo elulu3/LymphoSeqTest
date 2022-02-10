@@ -1,9 +1,9 @@
 #' Pairwise comparison plot
 #' 
-#' Creates a heat map from a similarity or Bhattacharyya matrix.
+#' Creates a heat map from a Bhattacharyya, Similarity, Sorensen, or PSI matrix.
 #' 
-#' @param matrix A similarity or Bhattacharyya matrix produced by the LymphoSeq2 
-#' scoringMatrix function.
+#' @param matrix A Bhattacharyya, Similarity, Sorensen, or PSI matrix produced
+#' by the LymphoSeq2 scoringMatrix function.
 #' @return A pairwise comparison heat map.
 #' @details The plot is made using the package ggplot2 and can be reformatted
 #' using ggplot2 functions.  See examples below.

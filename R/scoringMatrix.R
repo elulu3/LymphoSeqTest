@@ -1,26 +1,30 @@
-#' Bhattacharyya matrix
+#' Bhattacharyya, Similarity, Sorensen, or PSI matrix
 #' 
-#' Calculates the Bhattacharyya coefficient of all pairwise comparison from a 
-#' list of data frames.
+#' Calculates the Bhattacharyya coefficient, Similarity score, Sorensen Index, or 
+#' Percent Similarity Index of all pairwise comparison from a list of data frames.
 #' 
 #' @param productive_table A tibble of productive sequences generated 
 #' by the LymphoSeq function productiveSeq.  "duplicate_frequency" and "junction_aa" 
 #' are a required columns.
 #' @param mode The mode to use for calculating pairwise similarity. Can take the values
-#' "Bhattacharyya" or "Similarity".
-#' @return A data frame of Bhattacharyya coefficients or Similarity scores calculated from all 
-#' pairwise comparisons from a list of repertoire_id data frames.  Both metrics 
-#' measure the amount of overlap between two samples.  The 
-#' value ranges from 0 to 1 where 1 indicates the sequence frequencies are 
+#' "Bhattacharyya", "Similarity", "Sorensen", or "PSI". Default is "Bhattacharyya".
+#' @return A data frame of Bhattacharyya coefficients, Similarity scores, Sorensen Index, or 
+#' Percent Similarity Index calculated from all pairwise comparisons from a list of
+#' repertoire_id data frames.  Both metrics measure the amount of overlap between two samples.
+#' The value ranges from 0 to 1 where 1 indicates the sequence frequencies are
 #' identical in the two samples and 0 indicates no shared frequencies.
 #' @examples
 #' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
 #' stable <- readImmunoSeq(path = file_path)
 #' atable <- productiveSeq(stable, aggregate = "junction_aa")
-#' bhattacharyya_matrix <- scoringMatrix(productive_table = atable, 
+#' bhattacharyya_matrix <- scoringMatrix(productive_table = atable,
 #'                                       mode = "Bhattacharyya")
-#' similarity_matrix <- scoringMatrix(productive_table = atable, 
+#' similarity_matrix <- scoringMatrix(productive_table = atable,
 #'                                    mode = "Similarity")
+#' sorensen_matrix <- scoringMatrix(productive_table = atable,
+#'                                    mode = "Sorensen")
+#' psi_matrix <- scoringMatrix(productive_table = atable,
+#'                              mode = "PSI")
 #' @seealso \code{\link{pairwisePlot}} for plotting results as a heat map.
 #' @export
 #' @import tidyverse
@@ -37,7 +41,7 @@ scoringMatrix <- function(productive_table, mode="Bhattacharyya") {
                           tidyr::pivot_wider(id_cols=sample1, 
                                              names_from=sample2, 
                                              values_from=bhattacharyya_coefficient)
-    } else if ( mode == "Similarity") {
+    } else if (mode == "Similarity") {
         scoring_matrix <- list(sample_list, sample_list) %>% 
                           purrr::cross() %>% 
                           purrr::map(similarityScore) %>%
@@ -45,7 +49,7 @@ scoringMatrix <- function(productive_table, mode="Bhattacharyya") {
                           tidyr::pivot_wider(id_cols=sample1, 
                                             names_from=sample2, 
                                             values_from=similarityScore)
-    } else if ( mode == "Sorensen") {
+    } else if (mode == "Sorensen") {
         scoring_matrix <- list(sample_list, sample_list) %>% 
                           purrr::cross() %>% 
                           purrr::map(sorensenIndex) %>%
@@ -53,7 +57,7 @@ scoringMatrix <- function(productive_table, mode="Bhattacharyya") {
                           tidyr::pivot_wider(id_cols=sample1, 
                                             names_from=sample2, 
                                             values_from=sorensenIndex)
-    } else if ( mode == "PSI") {
+    } else if (mode == "PSI") {
         scoring_matrix <- list(sample_list, sample_list) %>% 
                           purrr::cross() %>% 
                           purrr::map(percentSI) %>%

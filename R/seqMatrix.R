@@ -10,6 +10,8 @@
 #' @param sequences A character vector of amino acid sequences of interest.  It 
 #' is useful to specify the output from the LymphoSeq functions uniqueSeqs or 
 #' topSeqs and subsetting the "junction_aa" column.  See examples below.
+#' @param by Available options are "duplicate_frequency" and "duplicate_count".
+#' Default is "duplicate_frequence".
 #' @return Returns a data frame of unique, productive amino acid sequences as 
 #' rows and the \% frequency it appears in each repertoire_id as columns.
 #' @seealso \code{\link{topSeqs}} and \code{\link{uniqueSeqs}}
