@@ -18,10 +18,10 @@
 countKmer <- function(study_table, k) {
     seq <- dplyr::pull(study_table, "junction") %>%
             stats::na.omit()
-    kmer_counts <- lapply(seq,
+    kmer_counts <- purrr::map(seq,
         function(x) Biostrings::oligonucleotideFrequency(Biostrings::DNAString(x), k))
-    kmer_counts <- lapply(kmer_counts, function(x) x[x > 0])
-    kmer_counts <- lapply(kmer_counts,
+    kmer_counts <- purrr::map(kmer_counts, function(x) x[x > 0])
+    kmer_counts <- purrr::map(kmer_counts,
         function(x) data.frame(Kmer = names(x), Count = unname(x))) %>%
                     dplyr::bind_rows() %>%
                     dplyr::group_by(Kmer) %>%

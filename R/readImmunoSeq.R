@@ -43,11 +43,23 @@ readImmunoSeq <- function(path, recursive = FALSE) {
     }
     airr_headers_path <- system.file("extdata", "AIRR_fields.csv", package = "LymphoSeqTest")
     airr_fields <- readr::read_csv(airr_headers_path, trim_ws = TRUE)
+    matching_fields <- c(amino_acid = "sequence_aa", aminoAcid = "sequence_aa", 
+                        aminoAcid.CDR3.in.lowercase. = "sequence_aa", cdr1_amino_acid = "cdr1_aa",
+                        cdr1_rearrangement = "cdr1", cdr2_amino_acid = "cdr2_aa",
+                        cdr2_rearrangement = "cdr2", cdr3_amino_acid = "cdr3_aa",
+                        cdr3_rearrangement = "cdr3", d_allele_ties = "d2_call",
+                        dGeneNameTies = "d2_call", count = "duplicate_count",
+                        "count (reads)" = "duplicate_count", "count (templates)" = "duplicate_count",
+                        "count (templates/reads)" = "duplicate_count", d_resolved = "d_call",
+                        dMaxResolved = "d_call", frame_type = "productive", fuction = "productive",
+                        j_resolved = "j_call", jMaxResolved = "j_call", locus = "locus",
+                        nucleotide = "sequence", nucleotide.CDR3.in.lowercase. = "sequence",
+                        v_resolved = "v_call", vMaxResolved = "v_call")
     progress_bar <- progress::progress_bar$new(format = "Reading AIRR-Seq files [:bar] :percent eta: :eta",
                                            total = length(file_paths), clear = FALSE, width = 60)
     progress_bar$tick(0)
     file_list <- file_paths %>% 
-                 purrr::map(~ readFiles(.x, airr_fields, progress_bar)) %>%
+                 purrr::map(~ readFiles(.x, airr_fields, matching_fields, progress_bar)) %>%
                  dplyr::bind_rows()
     progress_bar$terminate()
     return(file_list)
@@ -64,20 +76,7 @@ readImmunoSeq <- function(path, recursive = FALSE) {
 #' @import tidyverse
 #' @export
 #' @rdname readImmunoSeq
-getStandard <- function(clone_file, airr_fields) {
-    matching_fields <- c(amino_acid = "sequence_aa", aminoAcid = "sequence_aa", 
-                        aminoAcid.CDR3.in.lowercase. = "sequence_aa", cdr1_amino_acid = "cdr1_aa",
-                        cdr1_rearrangement = "cdr1", cdr2_amino_acid = "cdr2_aa",
-                        cdr2_rearrangement = "cdr2", cdr3_amino_acid = "cdr3_aa",
-                        cdr3_rearrangement = "cdr3", d_allele_ties = "d2_call",
-                        dGeneNameTies = "d2_call", count = "duplicate_count",
-                        "count (reads)" = "duplicate_count", "count (templates)" = "duplicate_count",
-                        "count (templates/reads)" = "duplicate_count", d_resolved = "d_call",
-                        dMaxResolved = "d_call", frame_type = "productive", fuction = "productive",
-                        j_resolved = "j_call", jMaxResolved = "j_call", locus = "locus",
-                        nucleotide = "sequence", nucleotide.CDR3.in.lowercase. = "sequence",
-                        v_resolved = "v_call", vMaxResolved = "v_call")
-
+getStandard <- function(clone_file, airr_fields, matching_fields) {
     clone_data <- readr::read_tsv(clone_file, na = c("", "NA", "Nan", "NaN", "unresolved"))
     existing_match <- airr_fields[airr_fields %in% colnames(clone_data)]
     if (length(existing_match) == 144) {
@@ -133,9 +132,9 @@ getStandard <- function(clone_file, airr_fields) {
 #' @import tidyverse
 #' @export
 #' @rdname readImmunoSeq
-readFiles <- function(clone_file, empty_airr_frame, progress) {
+readFiles <- function(clone_file, empty_airr_frame, matching_fields, progress) {
     progress$tick()
-    file_info <- getStandard(clone_file, colnames(empty_airr_frame))
+    file_info <- getStandard(clone_file, colnames(empty_airr_frame), matching_fields)
     if (ncol(file_info) == 144) {
         return(file_info)
     }

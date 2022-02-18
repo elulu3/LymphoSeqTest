@@ -9,7 +9,7 @@
 #' productive.aa.
 #' @return Returns a data frame of the common sequences between two or more files 
 #' displaying their frequencies in each.
-#' @seealso \code{\link{commonSeqsVenn}}
+#' @seealso \code{\link{commonSeqsVenn}} \code{\link{commonSeqsPlot}} \code{\link{commonSeqsBar}}
 #' @examples
 #' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
 #' 

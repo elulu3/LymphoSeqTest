@@ -27,13 +27,14 @@
 #'                              mode = "PSI")
 #' @seealso \code{\link{pairwisePlot}} for plotting results as a heat map.
 #' @export
-#' @import tidyverse
+#' @import tidyverse tictoc
 scoringMatrix <- function(productive_table, mode="Bhattacharyya") {
     sample_list <- productive_table %>% 
                    dplyr::select(repertoire_id, junction_aa, duplicate_frequency, duplicate_count) %>% 
-                   dplyr::group_by(repertoire_id) %>% 
+                   dplyr::group_by(repertoire_id) %>%
                    dplyr::group_split()
     if (mode == "Bhattacharyya") {
+        tic()
         scoring_matrix <- list(sample_list, sample_list) %>% 
                           purrr::cross() %>% 
                           purrr::map(bhattacharyyaCoefficient) %>%
@@ -41,6 +42,7 @@ scoringMatrix <- function(productive_table, mode="Bhattacharyya") {
                           tidyr::pivot_wider(id_cols=sample1, 
                                              names_from=sample2, 
                                              values_from=bhattacharyya_coefficient)
+        toc()
     } else if (mode == "Similarity") {
         scoring_matrix <- list(sample_list, sample_list) %>% 
                           purrr::cross() %>% 
@@ -101,7 +103,7 @@ bhattacharyyaCoefficient <- function(sample_list) {
                                       by="junction_aa", 
                                       suffix = c("_p", "_q")) %>% 
                      dplyr::mutate(duplicate_frequency_p = tidyr::replace_na(duplicate_frequency_p, 0), 
-                                   duplicate_frequency_q = tidyr::replace_na(duplicate_frequency_q, 0))              
+                                   duplicate_frequency_q = tidyr::replace_na(duplicate_frequency_q, 0))
     s <- sample_merged$duplicate_frequency_p * sample_merged$duplicate_frequency_q
     bc <- base::sum(base::sqrt(s))
     bhattacharyya_coefficient <- tibble::tibble(sample1=sample1$repertoire_id[1], 

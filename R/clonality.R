@@ -59,9 +59,9 @@ clonality <- function(study_table) {
 
 summarySeq <- function(study_table) {
     productive <- LymphoSeqTest::productiveSeq(study_table, aggregate="junction")
-    frequency <- productive %>% 
+    frequency <- productive %>%
                  dplyr::pull(duplicate_frequency)
-    counts <- productive %>% 
+    counts <- productive %>%
               dplyr::pull(duplicate_count)
     entropy <- -base::sum(frequency * base::log2(frequency), na.rm=TRUE)
     clonality <- 1 - base::round(entropy/base::log2(base::nrow(productive)), digits = 6)

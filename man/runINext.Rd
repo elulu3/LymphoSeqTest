@@ -10,6 +10,8 @@ runINext(sample_table, color = "repertoire_id")
 \item{sample_table}{A tibble consisting antigen receptor sequencing
 data imported by the LymphoSeq function readImmunoSeq. "junction_aa", "duplicate_count", and
 "duplicate_frequency" are required columns.}
+
+\item{color}{}
 }
 \description{
 Given a repertoire_id table, for each generate rarefaction curves to estimate

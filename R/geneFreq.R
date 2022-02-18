@@ -23,7 +23,7 @@
 #' geneFreq(ntable, locus = "VDJ", family = FALSE)
 #' 
 #' @export
-#' @import tidyverse
+#' @import tidyverse dtplyr
 geneFreq <- function(productive_nt, locus = "V|D|J", family = FALSE) {
     if (family){
         gene_names <- productive_nt %>% 
@@ -32,13 +32,16 @@ geneFreq <- function(productive_nt, locus = "V|D|J", family = FALSE) {
                                           values_to="gene_name", 
                                           names_to="gene_type") %>%
                       dplyr::filter(stringr::str_detect(gene_type, base::paste("[", locus, base::tolower(locus), "]", sep=""))) %>%
+                        dtplyr::lazy_dt()
+        gene_names <- gene_names %>%
                       dplyr::group_by(repertoire_id, gene_name) %>% 
                       dplyr::summarize(duplicate_count = sum(duplicate_count), 
                                        gene_type = dplyr::first(gene_type)) %>%
                       dplyr::ungroup() %>%
                       dplyr::group_by(repertoire_id, gene_type) %>% 
                       dplyr::mutate(gene_frequency = duplicate_count/sum(duplicate_count)) %>%
-                      dplyr::ungroup()
+                      dplyr::ungroup() %>%
+                      dplyr::as_tibble()
     } else {
         gene_names <- productive_nt %>% 
                       dplyr::select(repertoire_id, duplicate_count, v_call, j_call, d_call) %>%
@@ -46,13 +49,16 @@ geneFreq <- function(productive_nt, locus = "V|D|J", family = FALSE) {
                                           values_to="gene_name", 
                                           names_to="gene_type") %>%
                       dplyr::filter(stringr::str_detect(gene_type, base::paste("[", locus, base::tolower(locus), "]", sep=""))) %>%
+                      dtplyr::lazy_dt()
+        gene_names <- gene_names %>%
                       dplyr::group_by(repertoire_id, gene_name) %>% 
                       dplyr::summarize(duplicate_count = sum(duplicate_count),
                                        gene_type = dplyr::first(gene_type)) %>%
                       dplyr::ungroup() %>%
                       dplyr::group_by(repertoire_id, gene_type) %>%
                       dplyr::mutate(gene_frequency = duplicate_count/sum(duplicate_count)) %>%
-                      dplyr::ungroup()
+                      dplyr::ungroup() %>%
+                      dplyr::as_tibble()
     }
     return(gene_names)
 }

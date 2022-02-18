@@ -52,7 +52,6 @@ chordDiagramVDJ <- function(study_table, association = "VJ", colors = c("red", "
               dplyr::mutate(value = as.integer(value))
         vcolors <- base::rep(colors[1], base::length(base::unique(vj$from)))
         jcolors <- base::rep(colors[2], base::length(base::unique(vj$to)))
-        print(vj)
         ribbon.color <- circlize::colorRamp2(range(vj$value), c("grey", "black"))
         circlize::chordDiagram(vj, 
                                annotationTrack = c("grid", "name"), 

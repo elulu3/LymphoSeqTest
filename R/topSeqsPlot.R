@@ -44,7 +44,7 @@ topSeqsPlot <- function(study_table, top = 10) {
                                     junction_aa = "All other sequences") %>%
                    dplyr::select(repertoire_id, junction_aa, Frequency) %>%
                    dplyr::mutate(Sequence = as.factor(11)) %>%
-                   ungroup()
+                   dplyr::ungroup()
     topfreq <- bind_rows(dominant, subdominant) %>%
                dplyr::arrange(repertoire_id, Sequence, desc(Frequency)) %>%
                dplyr::mutate(Frequency = Frequency *  100)

@@ -32,7 +32,7 @@
 #' ggplot2::labs(fill = "Similarity score") + 
 #' ggplot2::ggtitle("Figure Title")
 #' @export
-#' @import tidyverse
+#' @import tidyverse ggfittext
 pairwisePlot <- function(matrix) {
     samples <- rownames(matrix)
     matrix[base::lower.tri(matrix)] <- NA
@@ -42,9 +42,10 @@ pairwisePlot <- function(matrix) {
               dplyr::select(repertoire_id, dplyr::everything()) %>%
               tidyr::pivot_longer(-repertoire_id, names_to = "repertoire_id_y", values_to = "score", values_drop_na = TRUE) %>%
               dplyr::arrange(repertoire_id, repertoire_id_y)
-    ggplot(data = matrix, aes_string(x = "repertoire_id", y = "repertoire_id_y", fill = "score")) + 
+    ggplot(data = matrix, aes_string(x = "repertoire_id", y = "repertoire_id_y", fill = "score", label = "score")) + 
     ggplot2::geom_tile() + 
     ggplot2::geom_text(aes(repertoire_id, repertoire_id_y, label = sprintf("%0.2f", round(score, digits = 2))), color = "black", size = 4) +
+    ggfittext::geom_fit_text() +
     ggplot2::scale_fill_gradient(low = "#fee8c8", high = "#e34a33") + 
     ggplot2::theme_classic() + 
     ggplot2::labs(x = "", y = "", fill = "") + 

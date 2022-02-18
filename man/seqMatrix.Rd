@@ -14,6 +14,9 @@ was set to "junction_aa".}
 \item{sequences}{A character vector of amino acid sequences of interest.  It
 is useful to specify the output from the LymphoSeq functions uniqueSeqs or
 topSeqs and subsetting the "junction_aa" column.  See examples below.}
+
+\item{by}{Available options are "duplicate_frequency" and "duplicate_count".
+Default is "duplicate_frequence".}
 }
 \value{
 Returns a data frame of unique, productive amino acid sequences as

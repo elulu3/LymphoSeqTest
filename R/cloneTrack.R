@@ -59,11 +59,13 @@ cloneTrack <- function(study_table, sample_list = NULL, sequence_track = NULL,
                       dplyr::pull(junction_aa) %>%
                       base::unique()
   }
+  study_table <- study_table %>%
+                    dtplyr::lazy_dt()
   tracker_table <- study_table %>%
                    dplyr::filter(repertoire_id %in% sample_list & junction_aa %in% sequence_track) %>%
                    dplyr::group_by(junction_aa) %>%
                    dplyr::mutate(seen = dplyr::n()) %>%
-                   dplyr::ungroup()  
+                   dplyr::ungroup() %>%
+                   dplyr::as_tibble()
   return(tracker_table)
 }
-  

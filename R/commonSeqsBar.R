@@ -20,6 +20,7 @@
 #' include "yes" or "no".
 #' @return Returns an UpSetR bar plot showing the number of intersecting sequences 
 #' across multiple repertoire_ids.
+#' @seealso \code{\link{commonSeqs}}
 #' @examples
 #' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
 #' 
@@ -58,7 +59,7 @@ commonSeqsBar <- function(productive_aa, repertoire_ids, color_sample = NULL,
                                 sets = repertoire_ids,
                                 nsets = length(repertoire_ids), 
                                 nintersects = NA,
-                                text.scale = 2,
+                                text.scale = 1,
                                 mainbar.y.label = "Number of intersecting sequences",
                                 sets.x.label = "Number of sequences",
                                 mb.ratio = c(0.7, 0.3),
@@ -80,8 +81,8 @@ commonSeqsBar <- function(productive_aa, repertoire_ids, color_sample = NULL,
               mb.ratio = c(0.7, 0.3),
               show.numbers = labels,
               matrix.dot.alpha = 0,
-              text.scale = 2,
-              queries = list(list(query = elements, 
+              text.scale = 1,
+              queries = list(list(query = UpSetR::elements,
                                   params = list(color_intersection), 
                                   color = color,
                                   active = TRUE)))
@@ -90,7 +91,7 @@ commonSeqsBar <- function(productive_aa, repertoire_ids, color_sample = NULL,
               sets = repertoire_ids,
               nsets = length(repertoire_ids), 
               nintersects = NA,
-              text.scale = 2,
+              text.scale = 1,
               mainbar.y.label = "Number of intersecting sequences",
               sets.x.label = "Number of sequences",
               mb.ratio = c(0.7, 0.3),

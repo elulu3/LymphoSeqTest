@@ -32,5 +32,5 @@ commonSeqs(repertoire_ids = c("TRB_Unsorted_0", "TRB_Unsorted_32"),
    study_table = atable)
 }
 \seealso{
-\code{\link{commonSeqsVenn}}
+\code{\link{commonSeqsVenn}} \code{\link{commonSeqsPlot}} \code{\link{commonSeqsBar}}
 }

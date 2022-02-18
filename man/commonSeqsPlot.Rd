@@ -51,4 +51,6 @@ commonSeqsPlot("TRB_Unsorted_32", "TRB_Unsorted_83",
 \seealso{
 An excellent resource for examples on how to reformat a ggplot can
 be found in the R Graphics Cookbook online (\url{http://www.cookbook-r.com/Graphs/}).
+
+\code{\link{commonSeqs}}
 }

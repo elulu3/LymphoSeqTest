@@ -25,13 +25,14 @@
 #' A productive sequences is defined as a sequences 
 #' that is in frame and does not have an early stop codon.
 #' @examples
-#' file_path <- base::system.file("extdata", "TCRB_study", package = "LymphoSeqTest")
-#' stable <- LymphoSeqTest::readImmunoSeq(path = file_path)
-#' atable <- LymphoSeqTest::productiveSeq(study_table = stable, 
-#'                                     aggregate = "junction_aa", 
-#'                                     prevalence = TRUE)
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' stable <- readImmunoSeq(path = file_path)
+#' atable <- productiveSeq(study_table = stable,
+#'                         aggregate = "junction_aa",
+#'                         prevalence = TRUE)
 #' @export
-#' @import tidyverse 
+#' @import tidyverse dtplyr 
+#' 
 productiveSeq <- function(study_table, aggregate = "junction_aa", prevalence = FALSE) {
     if (aggregate == "junction" & prevalence) {
         stop("In order to add prevalence to your list of data frames, aggregate must be equal 'junction_aa'.", 
@@ -44,11 +45,12 @@ productiveSeq <- function(study_table, aggregate = "junction_aa", prevalence = F
     progress_bar <- progress::progress_bar$new(format = "Subsetting productive sequences [:bar] :percent eta: :eta",
         total = nsample, clear = FALSE, width = 60)
     progress_bar$tick(0)
-    agg_table <- study_table %>% 
+    agg_table <- study_table %>%
                  dplyr::group_by(repertoire_id) %>%
                  dplyr::group_split() %>%
-                 purrr::map(~ aggreateSeq(.x, aggregate, prevalence, progress_bar)) %>% 
+                 purrr::map(~ aggreateSeq(.x, aggregate, prevalence, progress_bar)) %>%
                  dplyr::bind_rows()
+
     return(agg_table)
 }
 
@@ -59,10 +61,12 @@ productiveSeq <- function(study_table, aggregate = "junction_aa", prevalence = F
 aggreateSeq <- function(study_table, aggregate, prevalence, progress_bar) {
     progress_bar$tick()
     if (aggregate == "junction") {
-        study_table <- study_table %>% 
+        study_table <- study_table %>%
                        dplyr::filter(reading_frame == "in-frame") %>% 
                        dplyr::mutate(vdj_comb_call = stringr::str_glue("{v_call};{j_call};{d_call}"),
                                      vdj_comb_family = stringr::str_glue("{v_family};{j_family};{d_family}")) %>%
+                        dtplyr::lazy_dt()
+        study_table <- study_table %>%
                        dplyr::group_by(junction, vdj_comb_call) %>%
                        dplyr::mutate(vdj_comb_count = sum(duplicate_count)) %>%
                        dplyr::ungroup() %>% 
@@ -81,14 +85,17 @@ aggreateSeq <- function(study_table, aggregate, prevalence, progress_bar) {
                        dplyr::ungroup() %>%
                        dplyr::mutate(duplicate_frequency = duplicate_count / base::sum(duplicate_count)) %>%
                        dplyr::select(repertoire_id, junction, junction_aa, v_call, d_call, j_call, v_family, 
-                                     d_family, j_family, reading_frame, duplicate_count, duplicate_frequency)
+                                     d_family, j_family, reading_frame, duplicate_count, duplicate_frequency) %>%
+                        dplyr::as_tibble()
     }  else if (aggregate == "junction_aa") {
-        study_table <- study_table  %>% 
-                       dplyr::filter(reading_frame == "in-frame") %>% 
+        study_table <- study_table  %>%
+                       dplyr::filter(reading_frame == "in-frame") %>%             
                        dplyr::mutate(vdj_comb_call = stringr::str_glue("{v_call};{j_call};{d_call}"),
                                      vdj_comb_family = stringr::str_glue("{v_family};{j_family};{d_family}")) %>%
+                        dtplyr::lazy_dt()
+        study_table <- study_table  %>%
                        dplyr::group_by(junction_aa, vdj_comb_call) %>%
-                       dplyr::mutate(vdj_comb_count = sum(duplicate_count)) %>%
+                       dplyr::mutate(vdj_comb_count = base::sum(duplicate_count)) %>%
                        dplyr::ungroup() %>%
                        dplyr::group_by(junction_aa) %>% 
                        dplyr::arrange(desc(duplicate_count), desc(vdj_comb_count)) %>% 
@@ -104,7 +111,8 @@ aggreateSeq <- function(study_table, aggregate, prevalence, progress_bar) {
                        dplyr::ungroup() %>%
                        dplyr::mutate(duplicate_frequency = duplicate_count / base::sum(duplicate_count)) %>%
                        dplyr::select(repertoire_id, junction_aa, v_call, d_call, j_call, v_family, d_family, 
-                                     j_family, reading_frame, duplicate_count, duplicate_frequency)
+                                     j_family, reading_frame, duplicate_count, duplicate_frequency) %>%
+                        dplyr::as_tibble()
     }
     if (prevalence) {
         prev_table <- LymphoSeqTest::prevalenceTRB
@@ -113,6 +121,4 @@ aggreateSeq <- function(study_table, aggregate, prevalence, progress_bar) {
         
     }
     return(study_table)
-    
-    
 }

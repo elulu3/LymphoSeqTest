@@ -26,6 +26,7 @@
 #' top_freq <- topFreq(productive_table = atable, frequency = 0.1)
 #' @export
 topFreq <- function(productive_table, frequency = 0.1) {
+    productive_table <- productive_table
     top_freq <- productive_table %>%
                 dplyr::filter(duplicate_frequency >= frequency) %>%
                 dplyr::group_by(junction_aa) %>%

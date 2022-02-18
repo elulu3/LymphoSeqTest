@@ -53,3 +53,6 @@ atable <- productiveSeq(stable, aggregate = "junction_aa")
 commonSeqsBar(atable, repertoire_ids = c("TRB_CD4_949", "TRB_CD8_949",
 "TRB_Unsorted_949", "TRB_Unsorted_1320"), color_sample = "TRB_CD8_949")
 }
+\seealso{
+\code{\link{commonSeqs}}
+}

@@ -17,6 +17,7 @@
 #' using ggplot2 functions.  See examples below.
 #' @seealso An excellent resource for examples on how to reformat a ggplot can 
 #' be found in the R Graphics Cookbook online (\url{http://www.cookbook-r.com/Graphs/}).
+#' @seealso \code{\link{commonSeqs}}
 #' @examples
 #' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
 #' 
