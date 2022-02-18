@@ -56,9 +56,11 @@ them as MiAIRR compliant tibble.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">readImmunoSeq</span><span class="op">(</span><span class="va">path</span>, recursive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
-<span class="fu">getStandard</span><span class="op">(</span><span class="va">clone_file</span>, <span class="va">airr_fields</span><span class="op">)</span>
+<span class="fu">getStandard</span><span class="op">(</span><span class="va">clone_file</span>, <span class="va">airr_fields</span>, <span class="va">matching_fields</span><span class="op">)</span>
 
-<span class="fu">readFiles</span><span class="op">(</span><span class="va">clone_file</span>, <span class="va">progress</span><span class="op">)</span></code></pre></div>
+<span class="fu">readFiles</span><span class="op">(</span><span class="va">clone_file</span>, <span class="va">empty_airr_frame</span>, <span class="va">matching_fields</span>, <span class="va">progress</span><span class="op">)</span>
+
+<span class="fu">iReceptorFormat</span><span class="op">(</span><span class="va">clone_frame</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -71,17 +73,16 @@ the same as names of the files.</p></dd>
 <dd><p>.tsv file containing results from AIRRSeq pipeline</p></dd>
 <dt>airr_fields</dt>
 <dd><p>A character vector of MiAIRR headers</p></dd>
+<dt>clone_frame</dt>
+<dd><p>An AIRR compliant tibble</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Returns a tibble with MiAIRR headers and repertoire_id
 Tibble of given data with MiAIRR fields
-Tibble in MiAIRR format</p>
+Tibble in MiAIRR format
+Tibble in iReceptor format</p>
     </div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>May import tab-delimited files containing antigen receptor
-sequencing from with the following header set.</p><table class="table table"><tr><td>MiAIRR field ID</td><td>Type1</td><td>Type2</td><td>Type3</td><td>Type4</td><td>Type5</td><td>Type6</td></tr><tr><td>junction</td><td>nucleotide</td><td>nucleotide</td><td>nucleotide</td><td>nucleotide.CDR3.in.lowercase .</td><td>nucleotide( CDR3   in   lowercase )</td><td>nSeqCDR3</td></tr><tr><td>junction_aa</td><td>aminoAcid</td><td>aminoAcid</td><td>aminoAcid</td><td>aminoAcid.CDR3.in.lowercase .</td><td>aminoAcid( CDR3   in   lowercase )</td><td>aaSeqCDR3</td></tr><tr><td>duplicate_count</td><td>count ( reads )</td><td>count ( templates / reads )</td><td>count ( templates )</td><td>cloneCount</td><td>cloneCount</td><td>cloneCount</td></tr><tr><td>v_call</td><td>vGeneName</td><td>vGeneName</td><td>vGeneName</td><td>vGene</td><td>vGene</td><td>allVHitsWithScore</td></tr><tr><td>d_call</td><td>dGeneName</td><td>dGeneName</td><td>dGeneName</td><td>dGene</td><td>dGene</td><td>allDHitsWithScore</td></tr><tr><td>j_call</td><td>jGeneName</td><td>jGeneName</td><td>jGeneName</td><td>jGene</td><td>jGene</td><td>allJHitsWithScore</td></tr></table></div>
     <div class="section level2">
     <h2 id="get-standard-headers">Get standard headers<a class="anchor" aria-label="anchor" href="#get-standard-headers"></a></h2>
     
@@ -95,6 +96,13 @@ sequencing from with the following header set.</p><table class="table table"><tr
 
 
 <p>Given the path to a single AIRRSeq clone file, generate MiAIRR compliant tibble.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="get-ireceptor-standard-format">Get iReceptor standard format<a class="anchor" aria-label="anchor" href="#get-ireceptor-standard-format"></a></h2>
+    
+
+
+<p>Returns a tibble that is compliant with the iReceptor repertoire format.</p>
     </div>
 
     <div class="section level2">
@@ -110,8 +118,8 @@ sequencing from with the following header set.</p><table class="table table"><tr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (70): v_score, v_identity, v_support, d_score, d_identity, d_support, d2...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span>  (5): rev_comp, productive, vj_in_frame, stop_codon, complete_vdj</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use <span style="color: #262626; background-color: #DADADA;">`spec()`</span> to retrieve the full column specification for this data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set <span style="color: #262626; background-color: #DADADA;">`show_col_types = FALSE`</span> to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">1000</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">52</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Delimiter:</span> "\t"</span>
@@ -119,8 +127,8 @@ sequencing from with the following header set.</p><table class="table table"><tr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (15): count (templates/reads), frequencyCount (%), cdr3Length, vDeletion...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span>  (4): vFamilyTies, jFamilyTies, jGeneNameTies, jGeneAlleleTies</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use <span style="color: #262626; background-color: #DADADA;">`spec()`</span> to retrieve the full column specification for this data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set <span style="color: #262626; background-color: #DADADA;">`show_col_types = FALSE`</span> to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("sequence", "sequence_aa", "v_call", "d_call", "d2_call",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "j_call", "junction", "junction_aa", "duplicate_count", "clone_id",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "repertoire_id")</span>
@@ -131,8 +139,8 @@ sequencing from with the following header set.</p><table class="table table"><tr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (15): count (templates/reads), frequencyCount (%), cdr3Length, vDeletion...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span>  (3): jFamilyTies, jGeneNameTies, jGeneAlleleTies</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use <span style="color: #262626; background-color: #DADADA;">`spec()`</span> to retrieve the full column specification for this data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set <span style="color: #262626; background-color: #DADADA;">`show_col_types = FALSE`</span> to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("sequence", "sequence_aa", "v_call", "d_call", "d2_call",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "j_call", "junction", "junction_aa", "duplicate_count", "clone_id",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "repertoire_id")</span>
@@ -143,8 +151,8 @@ sequencing from with the following header set.</p><table class="table table"><tr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (15): count (templates/reads), frequencyCount (%), cdr3Length, vDeletion...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span>  (3): jFamilyTies, jGeneNameTies, jGeneAlleleTies</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use <span style="color: #262626; background-color: #DADADA;">`spec()`</span> to retrieve the full column specification for this data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set <span style="color: #262626; background-color: #DADADA;">`show_col_types = FALSE`</span> to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("sequence", "sequence_aa", "v_call", "d_call", "d2_call",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "j_call", "junction", "junction_aa", "duplicate_count", "clone_id",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "repertoire_id")</span>
@@ -155,8 +163,8 @@ sequencing from with the following header set.</p><table class="table table"><tr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (15): count (templates/reads), frequencyCount (%), cdr3Length, vDeletion...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span>  (3): jFamilyTies, jGeneNameTies, jGeneAlleleTies</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use <span style="color: #262626; background-color: #DADADA;">`spec()`</span> to retrieve the full column specification for this data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set <span style="color: #262626; background-color: #DADADA;">`show_col_types = FALSE`</span> to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("sequence", "sequence_aa", "v_call", "d_call", "d2_call",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "j_call", "junction", "junction_aa", "duplicate_count", "clone_id",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "repertoire_id")</span>
@@ -167,8 +175,8 @@ sequencing from with the following header set.</p><table class="table table"><tr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (15): count (templates/reads), frequencyCount (%), cdr3Length, vDeletion...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span>  (3): jFamilyTies, jGeneNameTies, jGeneAlleleTies</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use <span style="color: #262626; background-color: #DADADA;">`spec()`</span> to retrieve the full column specification for this data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set <span style="color: #262626; background-color: #DADADA;">`show_col_types = FALSE`</span> to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("sequence", "sequence_aa", "v_call", "d_call", "d2_call",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "j_call", "junction", "junction_aa", "duplicate_count", "clone_id",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "repertoire_id")</span>
@@ -179,8 +187,8 @@ sequencing from with the following header set.</p><table class="table table"><tr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (15): count (templates/reads), frequencyCount (%), cdr3Length, vDeletion...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span>  (2): jFamilyTies, jGeneAlleleTies</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use <span style="color: #262626; background-color: #DADADA;">`spec()`</span> to retrieve the full column specification for this data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set <span style="color: #262626; background-color: #DADADA;">`show_col_types = FALSE`</span> to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("sequence", "sequence_aa", "v_call", "d_call", "d2_call",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "j_call", "junction", "junction_aa", "duplicate_count", "clone_id",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "repertoire_id")</span>
@@ -191,8 +199,8 @@ sequencing from with the following header set.</p><table class="table table"><tr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (14): count (templates/reads), frequencyCount (%), cdr3Length, vDeletion...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span>  (9): vGeneAllele, vGeneAlleleTies, dGeneAllele, dFamilyTies, dGeneAllel...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use <span style="color: #262626; background-color: #DADADA;">`spec()`</span> to retrieve the full column specification for this data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set <span style="color: #262626; background-color: #DADADA;">`show_col_types = FALSE`</span> to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("sequence", "sequence_aa", "v_call", "d_call", "d2_call",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "j_call", "junction", "junction_aa", "duplicate_count", "clone_id",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "repertoire_id")</span>
@@ -203,8 +211,8 @@ sequencing from with the following header set.</p><table class="table table"><tr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (14): count (templates/reads), frequencyCount (%), cdr3Length, vDeletion...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span>  (9): vGeneAllele, vGeneAlleleTies, dGeneAllele, dFamilyTies, dGeneAllel...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use <span style="color: #262626; background-color: #DADADA;">`spec()`</span> to retrieve the full column specification for this data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set <span style="color: #262626; background-color: #DADADA;">`show_col_types = FALSE`</span> to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("sequence", "sequence_aa", "v_call", "d_call", "d2_call",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "j_call", "junction", "junction_aa", "duplicate_count", "clone_id",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "repertoire_id")</span>
@@ -215,8 +223,8 @@ sequencing from with the following header set.</p><table class="table table"><tr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (14): count (templates/reads), frequencyCount (%), cdr3Length, vDeletion...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span>  (9): vGeneAllele, vGeneAlleleTies, dGeneAllele, dFamilyTies, dGeneAllel...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use <span style="color: #262626; background-color: #DADADA;">`spec()`</span> to retrieve the full column specification for this data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set <span style="color: #262626; background-color: #DADADA;">`show_col_types = FALSE`</span> to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("sequence", "sequence_aa", "v_call", "d_call", "d2_call",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "j_call", "junction", "junction_aa", "duplicate_count", "clone_id",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "repertoire_id")</span>
@@ -227,8 +235,8 @@ sequencing from with the following header set.</p><table class="table table"><tr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">dbl</span> (15): count (templates/reads), frequencyCount (%), cdr3Length, vDeletion...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">lgl</span>  (3): jFamilyTies, jGeneNameTies, jGeneAlleleTies</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use <span style="color: #262626; background-color: #DADADA;">`spec()`</span> to retrieve the full column specification for this data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set <span style="color: #262626; background-color: #DADADA;">`show_col_types = FALSE`</span> to quiet this message.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("sequence", "sequence_aa", "v_call", "d_call", "d2_call",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "j_call", "junction", "junction_aa", "duplicate_count", "clone_id",</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> "repertoire_id")</span>
