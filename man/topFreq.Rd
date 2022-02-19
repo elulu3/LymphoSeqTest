@@ -31,9 +31,3 @@ the sequence appears in along with the minimum, maximum, and mean frequency
 across all samples.  For T cell receptor beta sequences, the \\% prevalence
 and antigen specificity of that sequence is also provided.
 }
-\examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
-stable <- readImmunoSeq(path = file_path)
-atable <- productiveSeq(study_table = stable, aggregate = "junction_aa")
-top_freq <- topFreq(productive_table = atable, frequency = 0.1)
-}

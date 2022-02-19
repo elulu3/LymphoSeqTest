@@ -6,7 +6,7 @@
 #' @param k The length of kmers.
 #' @return A tibble with two columns: the kmers and its respective count.
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 #'
 #' stable <- readImmunoSeq(path = file_path)
 #'

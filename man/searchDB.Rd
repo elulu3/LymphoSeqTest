@@ -22,13 +22,3 @@ information including disease status, sample type, and PubMed ID
 Search for published T cell receptor beta CDR3 amino acid sequences with
 known antigen specificity in a list of data frames.
 }
-\examples{
-file.path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
-
-study_table <- readImmunoSeq(path = file.path)
-
-productive_aa <- productiveSeq(study_table = study_table, aggregate = "aminoAcid")
-
-top_seqs <- topSeqs(productive_table = productive_aa, top = 1)
-searchDB(study_table = top_seqs, credential="Adaptive")
-}

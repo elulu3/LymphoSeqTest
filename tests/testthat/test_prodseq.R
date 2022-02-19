@@ -1,10 +1,10 @@
 context("Get productive sequences")
-library(LymphoSeqTest)
+library(LymphoSeq2)
 
 test_that("Gather productive aminoacid sequences", {
-  stable <- LymphoSeqTest::readImmunoSeq(c("test_data/015V12001549_CFAR.tsv", 
+  stable <- LymphoSeq2::readImmunoSeq(c("test_data/015V12001549_CFAR.tsv", 
                                         "test_data/015V12001685_CFAR_R.tsv"))
-  atable <- LymphoSeqTest::productiveSeq(stable)
+  atable <- LymphoSeq2::productiveSeq(stable)
   arow <- base::nrow(atable)
   ctable <- tibble::tibble(repertoire_id = c("015V12001549_CFAR", "015V12001685_CFAR_R"),
                            tot_freq = c(1, 1),
@@ -22,9 +22,9 @@ test_that("Gather productive aminoacid sequences", {
 })
 
 test_that("Gather productive nucleotide sequences", {
-  stable <- LymphoSeqTest::readImmunoSeq(c("test_data/015V12001549_CFAR.tsv", 
+  stable <- LymphoSeq2::readImmunoSeq(c("test_data/015V12001549_CFAR.tsv", 
                                         "test_data/015V12001685_CFAR_R.tsv"))
-  atable <- LymphoSeqTest::productiveSeq(stable, aggregate = "junction")
+  atable <- LymphoSeq2::productiveSeq(stable, aggregate = "junction")
   arow <- base::nrow(atable)
   ctable <- tibble::tibble(repertoire_id = c("015V12001549_CFAR", "015V12001685_CFAR_R"),
                            tot_freq = c(1, 1),

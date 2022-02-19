@@ -18,7 +18,7 @@
 #' more samples.
 #' @seealso \code{\link{topSeqs}}
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 #' 
 #' stable <- readImmunoSeq(file_path)
 #' 

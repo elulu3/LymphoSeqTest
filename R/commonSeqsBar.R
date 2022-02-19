@@ -22,7 +22,7 @@
 #' across multiple repertoire_ids.
 #' @seealso \code{\link{commonSeqs}}
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 #' 
 #' stable <- readImmunoSeq(path = file_path)
 #' 
@@ -34,8 +34,8 @@
 #' @import tidyverse
 commonSeqsBar <- function(productive_aa, repertoire_ids, color_sample = NULL,
                          color_intersection = NULL, color = "#377eb8", labels = "no"){
-    unique_seqs <- LymphoSeqTest::uniqueSeqs(productive_table = productive_aa) %>% pull(junction_aa)
-    sequence_matrix <- LymphoSeqTest::seqMatrix(productive_aa = productive_aa, sequences = unique_seqs) 
+    unique_seqs <- LymphoSeq2::uniqueSeqs(productive_table = productive_aa) %>% pull(junction_aa)
+    sequence_matrix <- LymphoSeq2::seqMatrix(productive_aa = productive_aa, sequences = unique_seqs) 
     junction_aa <- sequence_matrix %>% 
                    dplyr::pull(junction_aa)
     sequence_matrix <- sequence_matrix %>% 

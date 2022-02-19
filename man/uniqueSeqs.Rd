@@ -21,9 +21,3 @@ data frames aggregated by duplicate_count.
 \description{
 Aggregates all productive sequences within a list of data frames by duplicate_count.
 }
-\examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
-stable <- readImmunoSeq(path = file_path)
-atable <- productiveSeq(study_table = stable, aggregate = "junction_aa")
-unique_seqs <- uniqueSeqs(productive_table = atable, unique_type = "junction_aa")
-}

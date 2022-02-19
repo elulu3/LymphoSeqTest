@@ -14,7 +14,7 @@
 #' The value ranges from 0 to 1 where 1 indicates the sequence frequencies are
 #' identical in the two samples and 0 indicates no shared frequencies.
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2
 #' stable <- readImmunoSeq(path = file_path)
 #' atable <- productiveSeq(stable, aggregate = "junction_aa")
 #' bhattacharyya_matrix <- scoringMatrix(productive_table = atable,
@@ -34,7 +34,6 @@ scoringMatrix <- function(productive_table, mode="Bhattacharyya") {
                    dplyr::group_by(repertoire_id) %>%
                    dplyr::group_split()
     if (mode == "Bhattacharyya") {
-        tic()
         scoring_matrix <- list(sample_list, sample_list) %>% 
                           purrr::cross() %>% 
                           purrr::map(bhattacharyyaCoefficient) %>%
@@ -42,7 +41,6 @@ scoringMatrix <- function(productive_table, mode="Bhattacharyya") {
                           tidyr::pivot_wider(id_cols=sample1, 
                                              names_from=sample2, 
                                              values_from=bhattacharyya_coefficient)
-        toc()
     } else if (mode == "Similarity") {
         scoring_matrix <- list(sample_list, sample_list) %>% 
                           purrr::cross() %>% 
@@ -87,7 +85,7 @@ scoringMatrix <- function(productive_table, mode="Bhattacharyya") {
 #' @return A tibble with one row and three columns sample1, sample2, bhattacharyyaCoefficient
 #'
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2
 #' 
 #' stable <- readImmunoSeq(path = file_path)
 #' 
@@ -124,7 +122,7 @@ bhattacharyyaCoefficient <- function(sample_list) {
 #' the sequence frequencies are identical in the two samples and 0 
 #' indicates no shared frequencies.
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2
 #' 
 #' stable <- readImmunoSeq(path = file_path)
 #' 
@@ -165,7 +163,7 @@ similarityScore <- function(sample_list) {
 #' the sequence frequencies are identical in the two samples and 0 
 #' indicates no shared frequencies.
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2
 #' 
 #' stable <- readImmunoSeq(path = file_path)
 #' 
@@ -213,7 +211,7 @@ sorensenIndex <- function(sample_list) {
 #' the sequence frequencies are identical in the two samples and 0 
 #' indicates no shared frequencies.
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2
 #' 
 #' stable <- readImmunoSeq(path = file_path)
 #' 

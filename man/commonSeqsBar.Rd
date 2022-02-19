@@ -44,7 +44,7 @@ multiple repertoire_ids.  This function is useful when more than 3 repertoire_id
 compared.
 }
 \examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 
 stable <- readImmunoSeq(path = file_path)
 

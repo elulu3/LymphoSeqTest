@@ -14,7 +14,7 @@
 #' @return Returns a tibble with MiAIRR headers and repertoire_id
 #'
 #' @examples
-#' file.path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file.path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2
 #' 
 #' study_table <- readImmunoSeq(path = file.path,
 #'                              recursive = FALSE)
@@ -41,9 +41,9 @@ readImmunoSeq <- function(path, recursive = FALSE) {
         warning("One or more of the files you are trying to import has no sequences and will be ignored.", 
                 call. = FALSE)
     }
-    airr_headers_path <- system.file("extdata", "AIRR_fields.csv", package = "LymphoSeqTest")
+    airr_headers_path <- system.file("extdata", "AIRR_fields.csv", package = "LymphoSeq2")
     airr_fields <- readr::read_csv(airr_headers_path, trim_ws = TRUE)
-    matching_fields <- c(amino_acid = "sequence_aa", aminoAcid = "sequence_aa", 
+    matching_fields <- c(amino_acid = "sequence_aa", aminoAcid = "sequence_aa",
                         aminoAcid.CDR3.in.lowercase. = "sequence_aa", cdr1_amino_acid = "cdr1_aa",
                         cdr1_rearrangement = "cdr1", cdr2_amino_acid = "cdr2_aa",
                         cdr2_rearrangement = "cdr2", cdr3_amino_acid = "cdr3_aa",

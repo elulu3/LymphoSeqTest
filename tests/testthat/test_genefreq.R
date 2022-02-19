@@ -1,11 +1,11 @@
 context("Get VDJ gene frequency")
-library(LymphoSeqTest)
+library(LymphoSeq2)
 
 
 test_that("Gene frequency charcterized by gene name sums to 1", {
-  stable <- LymphoSeqTest::readImmunoSeq("test_data")
-  ntable <- LymphoSeqTest::productiveSeq(stable, aggregate = "junction")
-  gtable <- LymphoSeqTest::geneFreq(ntable) %>% 
+  stable <- LymphoSeq2::readImmunoSeq("test_data")
+  ntable <- LymphoSeq2::productiveSeq(stable, aggregate = "junction")
+  gtable <- LymphoSeq2::geneFreq(ntable) %>% 
             dplyr::group_by(repertoire_id, gene_type) %>% 
             dplyr::summarise(freq_tot = sum(gene_frequency)) %>%
             dplyr::pull(freq_tot)
@@ -13,9 +13,9 @@ test_that("Gene frequency charcterized by gene name sums to 1", {
 })
 
 test_that("Gene frequency charcterized by gene name sums to 1", {
-  stable <- LymphoSeqTest::readImmunoSeq("test_data")
-  ntable <- LymphoSeqTest::productiveSeq(stable, aggregate = "junction")
-  gtable <- LymphoSeqTest::geneFreq(ntable, family = TRUE) %>% 
+  stable <- LymphoSeq2::readImmunoSeq("test_data")
+  ntable <- LymphoSeq2::productiveSeq(stable, aggregate = "junction")
+  gtable <- LymphoSeq2::geneFreq(ntable, family = TRUE) %>% 
             dplyr::group_by(repertoire_id, gene_type) %>% 
             dplyr::summarise(freq_tot = sum(gene_frequency)) %>%
             dplyr::pull(freq_tot)

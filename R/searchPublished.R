@@ -14,7 +14,7 @@
 #' publishedTRB database is located in a separate package called LymphoSeqDB 
 #' that should be loaded automatically.
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2
 #' stable <- readImmunoSeq(path = file_path)
 #' atable <- productiveSeq(study_table = stable, aggregate = "junction_aa")
 #' searchPublished(atable)
@@ -23,7 +23,7 @@
 #' @export
 #' @import tidyverse
 searchPublished <- function(study_table) {
-    study_table <- dplyr::left_join(study_table, LymphoSeqTest::publishedTRB,
+    study_table <- dplyr::left_join(study_table, LymphoSeq2ishedTRB,
                                     by=c("junction_aa" = "aminoAcid"))
     return(study_table)
 }

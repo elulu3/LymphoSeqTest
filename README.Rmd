@@ -13,21 +13,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-# LymphoSeqTest
+# LymphoSeq2
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/elulu3/LymphoSeqTest/workflows/R-CMD-check/badge.svg)](https://github.com/elulu3/LymphoSeqTest/actions)
+[![R-CMD-check](https://github.com/elulu3/LymphoSeq2/workflows/R-CMD-check/badge.svg)](https://github.com/elulu3/LymphoSeq2/actions)
 <!-- badges: end -->
 
-The goal of LymphoSeqTest is to ...
+The goal of LymphoSeq2 is to ...
 
 ## Installation
 
-You can install the development version of LymphoSeqTest from [GitHub](https://github.com/) with:
+You can install the development version of LymphoSeq2 from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("elulu3/LymphoSeqTest")
+devtools::install_github("elulu3/LymphoSeq2")
 ```
 
 ## Example
@@ -35,7 +35,7 @@ devtools::install_github("elulu3/LymphoSeqTest")
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-library(LymphoSeqTest)
+library(LymphoSeq2)
 ## basic example code
 ```
 

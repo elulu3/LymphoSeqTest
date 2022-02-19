@@ -13,7 +13,7 @@
 #' information including disease status, sample type, and PubMed ID 
 #' (PMID) for the reference where the sequence was characterized.  
 #' @examples
-#' file.path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file.path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2
 #' 
 #' study_table <- readImmunoSeq(path = file.path)
 #' 

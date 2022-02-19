@@ -29,7 +29,7 @@
 #' installation instructions
 #' \url{http://bioconductor.org/packages/release/bioc/vignettes/msa/inst/doc/msa.pdf}
 #' @examples
-#' file_path <- system.file("extdata", "IGH_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "IGH_sequencing", package = "LymphoSeq2")
 #' 
 #' stable <- readImmunoSeq(path = file_path)
 #' 
@@ -50,7 +50,7 @@ alignSeq <- function(study_table, repertoire_ids = NULL,
     #set repertoire_ids to all samples and align all sequences against 
     #sequence list
     if(!is.null(sequence_list) & is.null(repertoire_ids)){
-        search_table <- LymphoSeqTest::searchSeq(study_table = study_table, 
+        search_table <- LymphoSeq2::searchSeq(study_table = study_table, 
                                              sequence = sequence_list, 
                                              edit_distance = edit_distance, 
                                              seq_type = type, 
@@ -64,7 +64,7 @@ alignSeq <- function(study_table, repertoire_ids = NULL,
     } else if(!is.null(sequence_list) & !is.null(repertoire_ids)){
         study_table <- study_table %>% 
                        dplyr::filter(repertoire_id %in% repertoire_ids)
-        search_table <- LymphoSeqTest::searchSeq(study_table = study_table,
+        search_table <- LymphoSeq2::searchSeq(study_table = study_table,
                                               sequence = sequence_list, 
                                               edit_distance =  edit_distance, 
                                               seq_type = type, 
@@ -85,11 +85,11 @@ alignSeq <- function(study_table, repertoire_ids = NULL,
     if(nrow(search_table) > top){
         if(is.null(sequence_list)){
             search_table <- search_table %>% 
-                            LymphoSeqTest::topSeqs(top = top)
+                            LymphoSeq2::topSeqs(top = top)
         } else {
             search_table <- search_table %>% 
                             dplyr::filter(!!base::as.symbol(type) %in% searchSequence) %>% 
-                            LymphoSeqTest::topSeqs(top = top)
+                            LymphoSeq2::topSeqs(top = top)
         }
         message("Only 150 sequences sampled equally from each search group will be selected")
     }

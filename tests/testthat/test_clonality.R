@@ -1,10 +1,10 @@
 context("Check if summary statistics for dataset are correct")
-library(LymphoSeqTest)
+library(LymphoSeq2)
 
 
 test_that("Check if summary statistics for test data are correct", {
-  stable <- LymphoSeqTest::readImmunoSeq("test_data/015V06013979_CFAR.tsv")
-  ctable <- LymphoSeqTest::clonality(stable)
+  stable <- LymphoSeq2::readImmunoSeq("test_data/015V06013979_CFAR.tsv")
+  ctable <- LymphoSeq2::clonality(stable)
   ttseq <- ctable %>%
            dplyr::pull(total_sequences)
   tupseq <- ctable %>%

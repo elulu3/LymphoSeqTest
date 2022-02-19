@@ -1,4 +1,4 @@
 library(testthat)
-library(LymphoSeqTest)
+library(LymphoSeq2)
 
-test_check("LymphoSeqTest")
+test_check("LymphoSeq2")

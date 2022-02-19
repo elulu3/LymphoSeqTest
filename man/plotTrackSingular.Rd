@@ -31,10 +31,10 @@ using ggplot2 functions.
 }}
 
 \examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
-stable <- LymphoSeqTest::readImmunoSeq(path = file_path)
-atable <- LymphoSeqTest::productiveSeq(stable, aggregate = "junction_aa")
-ctable <- LymphoSeqTest::cloneTrack(study_table = atable,
+file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
+stable <- LymphoSeq2::readImmunoSeq(path = file_path)
+atable <- LymphoSeq2::productiveSeq(stable, aggregate = "junction_aa")
+ctable <- LymphoSeq2::cloneTrack(study_table = atable,
                                 sample_list = c("TRB_CD8_949", "TRB_CD8_CMV_369"))
 
 }

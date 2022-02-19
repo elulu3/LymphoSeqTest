@@ -11,7 +11,7 @@
 #' displaying their frequencies in each.
 #' @seealso \code{\link{commonSeqsVenn}} \code{\link{commonSeqsPlot}} \code{\link{commonSeqsBar}}
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 #' 
 #' stable <- readImmunoSeq(path = file_path)
 #' 
@@ -27,8 +27,8 @@ commonSeqs <- function(study_table, repertoire_ids = NULL) {
                         base::unique()
     }
     common_seqs <- study_table %>% 
-                   LymphoSeqTest::cloneTrack(sample_list = repertoire_ids) %>%
+                   LymphoSeq2::cloneTrack(sample_list = repertoire_ids) %>%
                    dplyr::filter(seen > 1) %>%
-                   LymphoSeqTest::seqMatrix()
+                   LymphoSeq2::seqMatrix()
     return(common_seqs)
 }

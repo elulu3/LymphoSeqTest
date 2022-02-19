@@ -44,7 +44,7 @@ Both Gini coefficient and clonality are reported on a scale from 0 to 1 where
 repertoire is dominated by a single sequence.
 }
 \examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 
 stable <- readImmunoSeq(path = file_path)
 

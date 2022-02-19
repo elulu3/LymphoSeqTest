@@ -27,23 +27,6 @@ Creates a data frame with unique, productive amino acid sequences as rows and
 repertoire_id names as headers.  Each value in the data frame represents the
 frequency that the sequence appeared in the repertoire_id.
 }
-\examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
-stable <- readImmunoSeq(path = file_path)
-atable <- productiveSeq(stable,
-                        aggregate = "junction_aa")
-top_seqs <- topSeqs(atable,
-                    top = 1)
-sequence_matrix <- seqMatrix(atable,
-                             sequences = top_seqs$junction_aa)
-unique_seqs <- uniqueSeqs(atable)
-sequence_matrix <- seqMatrix(atable, 
-                             sequences = unique_seqs$junction_aa)
-# It can be helpful to combine top.freq and sequence.matrix
-top_freq <- topFreq(atable, frequency = 0.001)
-sequence_matrix <- seqMatrix(atable, sequences = top_freq$junction_aa)
-top_freq_matrix <- merge(top_freq, sequence_matrix)
-}
 \seealso{
 \code{\link{topSeqs}} and \code{\link{uniqueSeqs}}
 }

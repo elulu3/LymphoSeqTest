@@ -24,14 +24,6 @@ Calculates the Percent similarity index between two groups of repertoires. Perce
 similarity index, not only compares the number of similar and dissimilar species
 present between two sites, but also incorporate abundance.
 }
-\examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
-
-stable <- readImmunoSeq(path = file_path)
-
-atable <- productiveSeq(stable, aggregate = "junction_aa")
-
-}
 \seealso{
 \code{\link{scoringMatrix}}
 }

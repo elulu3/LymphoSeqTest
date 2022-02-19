@@ -31,7 +31,7 @@
 #' 0 indicates all sequences have the same frequency and 1 indicates the 
 #' repertoire is dominated by a single sequence.
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 #' 
 #' stable <- readImmunoSeq(path = file_path)
 #' 
@@ -58,7 +58,7 @@ clonality <- function(study_table) {
 #' @import tidyverse breakaway vegan
 
 summarySeq <- function(study_table) {
-    productive <- LymphoSeqTest::productiveSeq(study_table, aggregate="junction")
+    productive <- LymphoSeq2::productiveSeq(study_table, aggregate="junction")
     frequency <- productive %>%
                  dplyr::pull(duplicate_frequency)
     counts <- productive %>%

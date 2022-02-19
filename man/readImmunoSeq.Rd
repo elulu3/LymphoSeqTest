@@ -58,9 +58,3 @@ Given the path to a single AIRRSeq clone file, generate MiAIRR compliant tibble.
 Returns a tibble that is compliant with the iReceptor repertoire format.
 }
 
-\examples{
-file.path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
-
-study_table <- readImmunoSeq(path = file.path,
-                             recursive = FALSE)
-}

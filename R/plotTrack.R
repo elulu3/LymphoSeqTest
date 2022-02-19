@@ -10,12 +10,12 @@
 #' @param alphas Set alpha for the band
 #' @param breaks_pal Specify palette for the bands
 #' @examples 
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
-#' stable <- LymphoSeqTest::readImmunoSeq(path = file_path)
-#' atable <- LymphoSeqTest::productiveSeq(stable, aggregate = "junction_aa")
-#' ctable <- LymphoSeqTest::cloneTrack(study_table = atable,
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
+#' stable <- LymphoSeq2::readImmunoSeq(path = file_path)
+#' atable <- LymphoSeq2::productiveSeq(stable, aggregate = "junction_aa")
+#' ctable <- LymphoSeq2::cloneTrack(study_table = atable,
 #'                                 sample_list = c("TRB_CD8_949", "TRB_CD8_CMV_369"))
-#' LymphoSeqTest::plotTrack(ctable)
+#' LymphoSeq2::plotTrack(ctable)
 #' @return An alluvial diagram tracking particular clone across samples.
 #' @details The plot is made using the package ggplot2 and can be reformatted
 #' using ggplot2 functions.  See examples below.
@@ -25,7 +25,7 @@ plotTrack <- function(clone_table, alist = NULL, apal = NULL, breaks = 2, alphas
   # Identify all common sequences across samples
   acommon <- clone_table %>% 
              dplyr::filter(seen >= 2) %>%
-             LymphoSeqTest::seqMatrix() %>%
+             LymphoSeq2::seqMatrix() %>%
              dplyr::select(junction_aa) %>%
              dplyr::pull(junction_aa)
   # Generate a distinct palatte for Amino acid sequences

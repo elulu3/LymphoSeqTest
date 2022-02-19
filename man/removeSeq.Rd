@@ -22,10 +22,3 @@ recalculated.
 Removes an amino acid sequence and associated data from all instances within
 a list of data frames and then recomputes the frequencyCount.
 }
-\examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
-stable <- readImmunoSeq(path = file_path)
-searchSeq(stable, sequence = "CASSDLIGNGKLFF")
-cleansed <- removeSeq(stable, sequence = "CASSDLIGNGKLFF")
-searchSeq(cleansed, sequence = "CASSDLIGNGKLFF")
-}

@@ -25,19 +25,6 @@ identical in the two samples and 0 indicates no shared frequencies.
 Calculates the Bhattacharyya coefficient, Similarity score, Sorensen Index, or
 Percent Similarity Index of all pairwise comparison from a list of data frames.
 }
-\examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
-stable <- readImmunoSeq(path = file_path)
-atable <- productiveSeq(stable, aggregate = "junction_aa")
-bhattacharyya_matrix <- scoringMatrix(productive_table = atable,
-                                      mode = "Bhattacharyya")
-similarity_matrix <- scoringMatrix(productive_table = atable,
-                                   mode = "Similarity")
-sorensen_matrix <- scoringMatrix(productive_table = atable,
-                                   mode = "Sorensen")
-psi_matrix <- scoringMatrix(productive_table = atable,
-                             mode = "PSI")
-}
 \seealso{
 \code{\link{pairwisePlot}} for plotting results as a heat map.
 }

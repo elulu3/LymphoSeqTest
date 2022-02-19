@@ -19,7 +19,7 @@
 #' be found in the R Graphics Cookbook online (\url{http://www.cookbook-r.com/Graphs/}).
 #' @seealso \code{\link{commonSeqs}}
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 #' 
 #' stable <- readImmunoSeq(path = file_path)
 #' 
@@ -38,7 +38,7 @@
 commonSeqsPlot <- function(sample1, sample2, productive_aa, show = "common") {
     # Check if tibble is contains unproductive sequences
     if (show == "common") {
-        common <- LymphoSeqTest::commonSeqs(repertoire_ids =  c(sample1, sample2), 
+        common <- LymphoSeq2::commonSeqs(repertoire_ids =  c(sample1, sample2), 
                                          study_table =  productive_aa)
         plot <- ggplot2::ggplot(data = common, 
                                 aes_string(x = as.name(names(common)[2]), 

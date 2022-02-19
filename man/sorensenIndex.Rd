@@ -24,14 +24,6 @@ Calculates the Sorensen index between two groups of repertoires. Similar to
 a Jaccard index, Sorensen index gives a greater weight to shared sequences
 over unique sequences.
 }
-\examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
-
-stable <- readImmunoSeq(path = file_path)
-
-atable <- productiveSeq(stable, aggregate = "junction_aa")
-
-}
 \seealso{
 \code{\link{scoringMatrix}}
 }

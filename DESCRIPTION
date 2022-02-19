@@ -1,4 +1,4 @@
-Package: LymphoSeqTest
+Package: LymphoSeq2
 Title: Analyze high-throughput sequencing of T and B cell receptors
 Version: 0.0.0.9000
 Authors@R: 
@@ -37,7 +37,6 @@ Imports: Biostrings,
          stringr,
          progress,
          dtplyr,
-         ggfittext,
 Remotes: adw96/breakaway
 License: Artistic-2.0
 LazyData: true
@@ -60,6 +59,6 @@ biocViews: Software,
            vegan,
            phyloseq
 NeedsCompilation: no
-URL: https://github.com/elulu3/LymphoSeqTest,
-    https://elulu3.github.io/LymphoSeqTest
-BugReports: https://github.com/elulu3/LymphoSeqTest/issues
+URL: https://github.com/elulu3/LymphoSeq2,
+    https://elulu3.github.io/LymphoSeq2
+BugReports: https://github.com/elulu3/LymphoSeq2/issues

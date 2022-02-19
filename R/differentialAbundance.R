@@ -22,7 +22,7 @@
 #' measure in samples 1 and 2, the P value, Q value (Holms adjusted P value, also knowns as 
 #' the false discovery rate), and log2 transformed fold change.
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 #' 
 #' stable <- readImmunoSeq(path = file_path)
 #' 
@@ -41,12 +41,12 @@ differentialAbundance <- function(study_table, repertoire_ids = NULL, abundance 
     }
     fisher_table <- study_table %>%
                     dplyr::filter(repertoire_id %in% repertoire_ids) %>%
-                    LymphoSeqTest::seqMatrix(by = "duplicate_count") %>%
+                    LymphoSeq2::seqMatrix(by = "duplicate_count") %>%
                     dplyr::mutate(not_x = base::sum(!!base::as.name(repertoire_ids[1])) - !!base::as.name(repertoire_ids[1]),
                                   not_y = base::sum(!!base::as.name(repertoire_ids[2])) - !!base::as.name(repertoire_ids[2])) %>%
               
                     dplyr::rowwise() %>%
-                    dplyr::mutate(fisher = list(LymphoSeqTest::fisherFunction(!!base::as.name(repertoire_ids[1]), 
+                    dplyr::mutate(fisher = list(LymphoSeq2::fisherFunction(!!base::as.name(repertoire_ids[1]), 
                                                                        !!base::as.name(repertoire_ids[2]), 
                                                                        not_x, 
                                                                        not_y)))  %>%

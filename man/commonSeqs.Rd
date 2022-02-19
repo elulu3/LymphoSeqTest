@@ -22,7 +22,7 @@ Creates a data frame of the common sequences in two or more repertoire_ids, repo
 their frequencies in each.
 }
 \examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 
 stable <- readImmunoSeq(path = file_path)
 

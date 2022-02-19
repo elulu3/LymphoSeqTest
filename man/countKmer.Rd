@@ -18,7 +18,7 @@ A tibble with two columns: the kmers and its respective count.
 Calculate counts of kmers in the query nucleotide sequence
 }
 \examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 
 stable <- readImmunoSeq(path = file_path)
 

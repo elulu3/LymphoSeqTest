@@ -15,8 +15,8 @@
 #' junction amino acid sequence. The GLIPH file name is used as the repertoire_id
 #' 
 #' @examples
-#' file_path <- base::system.file("extdata", "TCRB_gliph", package = "LymphoSeqTest") 
-#' gliph_table <- LymphoSeqTest::readGliph(file_path)
+#' file_path <- base::system.file("extdata", "TCRB_gliph", package = "LymphoSeq2") 
+#' gliph_table <- LymphoSeq2::readGliph(file_path)
 #' 
 #' @export
 readGliph <- function(gliph_path) {

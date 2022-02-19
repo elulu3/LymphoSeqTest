@@ -38,9 +38,9 @@ that is in frame and does not have an early stop codon.
 \code{productiveSeq} Remove unproductive CDR3 sequences from a list of data frames.
 }
 \examples{
-file_path <- base::system.file("extdata", "TCRB_study", package = "LymphoSeqTest")
-stable <- LymphoSeqTest::readImmunoSeq(path = file_path)
-atable <- LymphoSeqTest::productiveSeq(study_table = stable, 
-                                    aggregate = "junction_aa", 
-                                    prevalence = TRUE)
+file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
+stable <- readImmunoSeq(path = file_path)
+atable <- productiveSeq(study_table = stable,
+                        aggregate = "junction_aa",
+                        prevalence = TRUE)
 }

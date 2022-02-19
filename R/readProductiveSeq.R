@@ -25,7 +25,7 @@
 #' A productive sequences is defined as a sequences 
 #' that is in frame and does not have an early stop codon.
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 #' stable <- readImmunoSeq(path = file_path)
 #' atable <- productiveSeq(study_table = stable,
 #'                         aggregate = "junction_aa",
@@ -115,7 +115,7 @@ aggreateSeq <- function(study_table, aggregate, prevalence, progress_bar) {
                         dplyr::as_tibble()
     }
     if (prevalence) {
-        prev_table <- LymphoSeqTest::prevalenceTRB
+        prev_table <- LymphoSeq2::prevalenceTRB
         study_table <- dplyr::left_join(study_table, prev_table, by=c("junction_aa" = "aminoAcid")) %>% 
                        dplyr::mutate(prevalence = tidyr::replace_na(prevalence, 0))
         

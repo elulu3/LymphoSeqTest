@@ -20,7 +20,7 @@
 #' comparing it to a database of previously reported sequences in the 
 #' literature. 
 #' @examples
-#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+#' file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2
 #' stable <- readImmunoSeq(path = file_path)
 #' atable <- productiveSeq(study_table = stable, aggregate = "junction_aa")
 #' top_freq <- topFreq(productive_table = atable, frequency = 0.1)
@@ -36,9 +36,9 @@ topFreq <- function(productive_table, frequency = 0.1) {
                                  numberSamples = length(duplicate_frequency > 0)) %>%
                 dplyr::arrange(desc(numberSamples), desc(meanFrequency))
     
-    top_freq <- dplyr::left_join(top_freq, LymphoSeqTest::prevalenceTRB, by=c("junction_aa" = "aminoAcid")) %>% 
+    top_freq <- dplyr::left_join(top_freq, LymphoSeq2revalenceTRB, by=c("junction_aa" = "aminoAcid")) %>% 
                 dplyr::mutate(prevalence = tidyr::replace_na(0))
-    antigen_table <- LymphoSeqTest::publishedTRB %>% 
+    antigen_table <- LymphoSeq2ublishedTRB %>% 
         dplyr::as_tibble() %>% 
         dplyr::select(aminoAcid, antigen)
     top_freq <- dplyr::left_join(top_freq, antigen_table, by=c("junction_aa" = "aminoAcid"))  

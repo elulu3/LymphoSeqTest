@@ -47,7 +47,7 @@ Use a Fisher exact test to calculate differential abdunance of each sequence in
 two samples and reports the log2 transformed fold change, P value and adjusted P value.
 }
 \examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 
 stable <- readImmunoSeq(path = file_path)
 

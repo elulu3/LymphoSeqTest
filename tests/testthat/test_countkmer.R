@@ -1,10 +1,10 @@
 context("Count k-mers in nucleotide sequence")
-library(LymphoSeqTest)
+library(LymphoSeq2)
 
 test_that("Number of k-mers are counted correctly", {
     junction <- "ATCGATCAC"
     study_table <- tibble(junction)
-    ktable <- LymphoSeqTest::countKmer(study_table = study_table, k = 3)
+    ktable <- LymphoSeq2::countKmer(study_table = study_table, k = 3)
     num_rows <- base::nrow(ktable)
     Kmer <- c("ATC", "TCG", "CGA", "GAT", "TCA", "CAC")
     Count <- c(2, 1, 1, 1, 1, 1)

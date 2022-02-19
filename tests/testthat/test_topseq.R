@@ -1,11 +1,11 @@
 context("Find n top sequences with highest frequency")
-library(LymphoSeqTest)
+library(LymphoSeq2)
 
 
 test_that("Find top sequence in all samples", {
-  stable <- LymphoSeqTest::readImmunoSeq("test_data/015V06013979_CFAR.tsv")
-  atable <- LymphoSeqTest::productiveSeq(stable, aggregate = "junction_aa")
-  ttable <- LymphoSeqTest::topSeqs(atable, top = 1) %>%
+  stable <- LymphoSeq2::readImmunoSeq("test_data/015V06013979_CFAR.tsv")
+  atable <- LymphoSeq2::productiveSeq(stable, aggregate = "junction_aa")
+  ttable <- LymphoSeq2::topSeqs(atable, top = 1) %>%
             dplyr::pull(duplicate_frequency) %>%
             base::max()
   ctable <- atable %>% 
@@ -15,9 +15,9 @@ test_that("Find top sequence in all samples", {
 })
 
 test_that("Find the top ten sequences in one sample", {
-  stable <- LymphoSeqTest::readImmunoSeq("test_data/015V06013979_CFAR.tsv")
-  atable <- LymphoSeqTest::productiveSeq(stable, aggregate = "junction_aa")
-  ttable <- LymphoSeqTest::topSeqs(atable, top = 10) %>%
+  stable <- LymphoSeq2::readImmunoSeq("test_data/015V06013979_CFAR.tsv")
+  atable <- LymphoSeq2::productiveSeq(stable, aggregate = "junction_aa")
+  ttable <- LymphoSeq2::topSeqs(atable, top = 10) %>%
             dplyr::pull(duplicate_frequency) 
   ctable <- atable %>% 
             dplyr::pull(duplicate_frequency) %>%
@@ -28,9 +28,9 @@ test_that("Find the top ten sequences in one sample", {
 
 
 test_that("Top sequences across samples is correctly identified", {
-  stable <- LymphoSeqTest::readImmunoSeq("test_data/")
-  atable <- LymphoSeqTest::productiveSeq(stable, aggregate = "junction_aa")
-  ttable <- LymphoSeqTest::topSeqs(atable, top = 1) 
+  stable <- LymphoSeq2::readImmunoSeq("test_data/")
+  atable <- LymphoSeq2::productiveSeq(stable, aggregate = "junction_aa")
+  ttable <- LymphoSeq2::topSeqs(atable, top = 1) 
   
   ctable <- atable %>% 
             dplyr::group_by(repertoire_id) %>%

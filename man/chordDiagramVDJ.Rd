@@ -32,7 +32,7 @@ number of samples or number of sequences that make up that recombination
 event.  The thicker the ribbon, the higher the frequency of the recombination.
 }
 \examples{
-file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeqTest")
+file_path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 
 stable <- readImmunoSeq(file_path)
 
