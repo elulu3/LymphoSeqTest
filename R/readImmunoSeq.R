@@ -77,7 +77,10 @@ readImmunoSeq <- function(path, recursive = FALSE) {
 #' @export
 #' @rdname readImmunoSeq
 getStandard <- function(clone_file, airr_fields, matching_fields) {
-    clone_data <- readr::read_tsv(clone_file, na = c("", "NA", "Nan", "NaN", "unresolved"))
+    clone_data <- fread(clone_file, sep = '\t', select = c(airr_fields, names(matching_fields)),
+                        na.strings = c("", "NA", "Nan", "NaN", "unresolved"),
+                        showProgress = FALSE, verbose = FALSE) %>%
+                    tibble::as_tibble()
     existing_match <- airr_fields[airr_fields %in% colnames(clone_data)]
     if (length(existing_match) == 144) {
         return(clone_data)
