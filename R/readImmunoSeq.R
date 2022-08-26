@@ -14,7 +14,7 @@
 #' @return Returns a tibble with MiAIRR headers and repertoire_id
 #'
 #' @examples
-#' file.path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2
+#' file.path <- system.file("extdata", "TCRB_sequencing", package = "LymphoSeq2")
 #' 
 #' study_table <- readImmunoSeq(path = file.path,
 #'                              recursive = FALSE)
